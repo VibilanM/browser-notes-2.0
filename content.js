@@ -100,6 +100,52 @@ function guardNoteControls(note, dragHandle, deleteBtn) {
     observer.observe(note, { childList: true });
 }
 
+function injectGlassStyles() {
+    if (document.getElementById('_bn_glass_styles')) return;
+    const style = document.createElement('style');
+    style.id = '_bn_glass_styles';
+    style.textContent = `
+        [data-browser-note] {
+            background: rgba(38, 38, 42, 0.55) !important;
+            backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
+            -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
+            border-radius: 28px !important;
+            box-shadow:
+                0 24px 64px rgba(0, 0, 0, 0.55),
+                inset 0 1.5px 0 rgba(255, 255, 255, 0.28),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+                inset 1px 0 0 rgba(255, 255, 255, 0.1),
+                inset -1px 0 0 rgba(0, 0, 0, 0.12) !important;
+            border: none !important;
+            position: relative;
+        }
+        [data-browser-note]::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            background: linear-gradient(
+                150deg,
+                rgba(255, 255, 255, 0.13) 0%,
+                rgba(255, 255, 255, 0.05) 30%,
+                rgba(255, 255, 255, 0.01) 55%,
+                rgba(0, 0, 0, 0.04) 100%
+            );
+            pointer-events: none;
+        }
+        [data-browser-note]:hover {
+            box-shadow:
+                0 28px 72px rgba(0, 0, 0, 0.6),
+                inset 0 1.5px 0 rgba(255, 255, 255, 0.32),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+                inset 1px 0 0 rgba(255, 255, 255, 0.12),
+                inset -1px 0 0 rgba(0, 0, 0, 0.14) !important;
+            transition: box-shadow 0.2s ease;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 function restoreNotes() {
     const currentURL = getNormalizedURL();
 
@@ -121,24 +167,19 @@ function restoreNotes() {
             note.style.left = noteData.x;
             note.style.top = noteData.y;
 
-            note.style.backgroundColor = "rgba(50, 50, 50, 0.65)";
-            note.style.backdropFilter = "blur(12px) saturate(150%)";
-            note.style.WebkitBackdropFilter = "blur(12px) saturate(150%)";
-            note.style.color = "rgba(255, 255, 255, 0.88)";
-            note.style.border = "none";
+            note.dataset.browserNote = 'true';
+
             note.style.padding = "16px";
             note.style.paddingTop = "44px";
             note.style.width = noteData.width || "200px";
             note.style.height = noteData.height || "200px";
             note.style.zIndex = "9999";
+            note.style.color = "rgba(255, 255, 255, 0.88)";
             note.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
             note.style.fontSize = "15px";
             note.style.lineHeight = "1.5";
             note.style.wordWrap = "break-word";
             note.style.overflowWrap = "break-word";
-            note.style.boxShadow = "0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12)";
-            note.style.borderRadius = "28px";
-            note.style.transition = "box-shadow 0.2s ease";
             note.style.cursor = "text";
             note.style.whiteSpace = "pre-wrap";
             note.style.resize = "both";
@@ -170,9 +211,10 @@ function cleanupNotes() {
 }
 
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", restoreNotes);
+    document.addEventListener("DOMContentLoaded", () => { injectGlassStyles(); restoreNotes(); });
 }
 else {
+    injectGlassStyles();
     restoreNotes();
 }
 
@@ -227,24 +269,19 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.left = `${lastRightX}px`;
     note.style.top = `${lastRightY}px`;
 
-    note.style.backgroundColor = "rgba(50, 50, 50, 0.65)";
-    note.style.backdropFilter = "blur(12px) saturate(150%)";
-    note.style.WebkitBackdropFilter = "blur(12px) saturate(150%)";
-    note.style.color = "rgba(255, 255, 255, 0.88)";
-    note.style.border = "none";
+    note.dataset.browserNote = 'true';
+
     note.style.padding = "16px";
     note.style.paddingTop = "44px";
     note.style.width = "200px";
     note.style.height = "200px";
     note.style.zIndex = "9999";
+    note.style.color = "rgba(255, 255, 255, 0.88)";
     note.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
     note.style.fontSize = "15px";
     note.style.lineHeight = "1.5";
     note.style.wordWrap = "break-word";
     note.style.overflowWrap = "break-word";
-    note.style.boxShadow = "0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12)";
-    note.style.borderRadius = "28px";
-    note.style.transition = "box-shadow 0.2s ease";
     note.style.cursor = "text";
     note.style.whiteSpace = "pre-wrap";
     note.style.resize = "both";
