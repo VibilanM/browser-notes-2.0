@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>All Notes</title>
     <style>
+        html {
+            background: transparent;
+        }
+        
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             width: 320px;
@@ -13,6 +17,9 @@
             background: #1a1a1c;
             color: rgba(255, 255, 255, 0.88);
             overflow-y: auto;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-sizing: border-box;
         }
 
         h2 {
@@ -174,10 +181,6 @@
     <div class="controls">
         <input type="text" id="search-input" placeholder="Search notes...">
         <div class="row-controls">
-            <select id="sort-select">
-                <option value="newest">Newest First</option>
-                <option value="oldest">Oldest First</option>
-            </select>
             <label class="checkbox-group">
                 <input type="checkbox" id="group-domain"> Group by site
             </label>

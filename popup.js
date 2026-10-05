@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("notes-container");
     const searchInput = document.getElementById("search-input");
-    const sortSelect = document.getElementById("sort-select");
     const groupDomainCheckbox = document.getElementById("group-domain");
     
     let allNotes = [];
@@ -17,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     searchInput.addEventListener("input", renderNotes);
-    sortSelect.addEventListener("change", renderNotes);
     groupDomainCheckbox.addEventListener("change", renderNotes);
 
     function getDomain(urlStr) {
@@ -32,12 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
         container.innerHTML = '';
         
         const query = searchInput.value.toLowerCase().trim();
-        const sortOrder = sortSelect.value;
         const groupByDomain = groupDomainCheckbox.checked;
 
-        let filtered = allNotes;
+        let filtered = [...allNotes];
         if (query) {
-            filtered = allNotes.filter(note => 
+            filtered = filtered.filter(note => 
                 note.content.toLowerCase().includes(query) || 
                 note.url.toLowerCase().includes(query)
             );
@@ -47,11 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
             container.innerHTML = '<div class="empty-state">No notes found.</div>';
             return;
         }
-
-        filtered.sort((a, b) => {
-            if (sortOrder === "newest") return b.timestamp - a.timestamp;
-            return a.timestamp - b.timestamp;
-        });
 
         if (groupByDomain) {
             const groups = {};
