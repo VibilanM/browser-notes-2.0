@@ -158,6 +158,7 @@ function restoreNotes() {
 
             note.dataset.id = noteData.id;
             note.dataset.url = noteData.url;
+            note.dataset.timestamp = noteData.timestamp || Date.now();
 
             note.innerText = noteData.content;
             note.contentEditable = true;
@@ -250,7 +251,8 @@ function saveNote(note) {
         y: note.style.top,
         url: url,
         width: note.style.width,
-        height: note.style.height
+        height: note.style.height,
+        timestamp: parseInt(note.dataset.timestamp, 10) || Date.now()
     }
 
     chrome.storage.local.set({ [id]: noteData });
@@ -264,6 +266,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     const noteId = crypto.randomUUID();
     note.dataset.id = noteId;
     note.dataset.url = getNormalizedURL();
+    note.dataset.timestamp = Date.now();
 
     note.contentEditable = true;
     note.spellcheck = false;

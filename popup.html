@@ -22,11 +22,69 @@
             font-weight: 600;
             text-align: center;
         }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-size: 13px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        
+        input[type="text"]:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .row-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        select {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            outline: none;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.7);
+        }
 
         #notes-container {
             display: flex;
             flex-direction: column;
             gap: 12px;
+        }
+
+        .domain-group-header {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+            margin-bottom: 4px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .note-item {
@@ -113,6 +171,18 @@
 </head>
 <body>
     <h2>All Notes</h2>
+    <div class="controls">
+        <input type="text" id="search-input" placeholder="Search notes...">
+        <div class="row-controls">
+            <select id="sort-select">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+            </select>
+            <label class="checkbox-group">
+                <input type="checkbox" id="group-domain"> Group by site
+            </label>
+        </div>
+    </div>
     <div id="notes-container"></div>
 
     <script src="popup.js"></script>
