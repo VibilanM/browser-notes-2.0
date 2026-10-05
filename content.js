@@ -12,6 +12,8 @@ function createDragHandle(note) {
     handle.style.cursor = "grab";
     handle.style.zIndex = "10000";
     handle.contentEditable = "false";
+    handle.style.userSelect = "none";
+    handle.style.pointerEvents = "auto";
 
     let isDragging = false;
     let offsetX = 0;
@@ -62,6 +64,8 @@ function createDeleteButton(note) {
     btn.style.opacity = "0.5";
     btn.style.transition = "opacity 0.2s";
     btn.contentEditable = "false";
+    btn.style.userSelect = "none";
+    btn.style.pointerEvents = "auto";
 
     btn.addEventListener("mouseenter", () => {
         btn.style.opacity = "1";
@@ -88,6 +92,14 @@ function getNormalizedURL() {
     return window.location.origin + window.location.pathname;
 }
 
+function guardNoteControls(note, dragHandle, deleteBtn) {
+    const observer = new MutationObserver(() => {
+        if (!note.contains(dragHandle)) note.appendChild(dragHandle);
+        if (!note.contains(deleteBtn)) note.appendChild(deleteBtn);
+    });
+    observer.observe(note, { childList: true });
+}
+
 function restoreNotes() {
     const currentURL = getNormalizedURL();
 
@@ -110,8 +122,8 @@ function restoreNotes() {
             note.style.top = noteData.y;
 
             note.style.backgroundColor = "rgba(30, 30, 30, 0.45)";
-            note.style.backdropFilter = "blur(40px) saturate(180%)";
-            note.style.WebkitBackdropFilter = "blur(40px) saturate(180%)";
+            note.style.backdropFilter = "blur(20px) saturate(160%)";
+            note.style.WebkitBackdropFilter = "blur(20px) saturate(160%)";
             note.style.color = "rgba(255, 255, 255, 0.9)";
             note.style.border = "1px solid rgba(255, 255, 255, 0.15)";
             note.style.padding = "20px 15px";
@@ -143,6 +155,8 @@ function restoreNotes() {
 
             const deleteBtn = createDeleteButton(note);
             note.appendChild(deleteBtn);
+
+            guardNoteControls(note, dragHandle, deleteBtn);
 
             document.body.appendChild(note);
         })
@@ -218,8 +232,8 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.top = `${lastRightY}px`;
 
     note.style.backgroundColor = "rgba(30, 30, 30, 0.45)";
-    note.style.backdropFilter = "blur(40px) saturate(180%)";
-    note.style.WebkitBackdropFilter = "blur(40px) saturate(180%)";
+    note.style.backdropFilter = "blur(20px) saturate(160%)";
+    note.style.WebkitBackdropFilter = "blur(20px) saturate(160%)";
     note.style.color = "rgba(255, 255, 255, 0.9)";
     note.style.border = "1px solid rgba(255, 255, 255, 0.15)";
     note.style.padding = "20px 15px";
@@ -249,6 +263,8 @@ chrome.runtime.onMessage.addListener((message, sender) => {
 
     const deleteBtn = createDeleteButton(note);
     note.appendChild(deleteBtn);
+
+    guardNoteControls(note, dragHandle, deleteBtn);
 
     document.body.appendChild(note);
 });
