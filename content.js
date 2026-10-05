@@ -109,11 +109,11 @@ function restoreNotes() {
             note.style.left = noteData.x;
             note.style.top = noteData.y;
 
-            note.style.backgroundColor = noteData.bgColor || "rgba(255, 240, 180, 0.9)";
+            note.style.backgroundColor = noteData.bgColor || "rgba(255, 242, 138, 0.95)";
             note.style.backdropFilter = "blur(4px) saturate(100%)";
             note.style.WebkitBackdropFilter = "blur(4px) saturate(100%)";
             note.style.color = "#111111";
-            note.style.border = "1px solid rgba(0, 0, 0, 0.1)";
+            note.style.border = "1px solid rgba(0, 0, 0, 0.15)";
             note.style.padding = "20px 15px";
             note.style.paddingTop = "24px";
             note.style.minWidth = "150px";
@@ -126,7 +126,7 @@ function restoreNotes() {
             note.style.lineHeight = "1.5";
             note.style.wordWrap = "break-word";
             note.style.overflowWrap = "break-word";
-            note.style.boxShadow = "3px 6px 14px rgba(0,0,0,0.25), 0 2px 5px rgba(0,0,0,0.2)";
+            note.style.boxShadow = "4px 8px 16px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.3)";
             note.style.borderRadius = "6px";
             note.style.transform = noteData.rotation || `rotate(${Math.random() * 4 - 2}deg)`;
             note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
@@ -219,18 +219,18 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.top = `${lastRightY}px`;
 
     const colors = [
-        "rgba(255, 210, 215, 0.9)", // Pinkish
-        "rgba(200, 235, 200, 0.9)", // Greenish
-        "rgba(200, 225, 255, 0.9)", // Blueish
-        "rgba(255, 225, 180, 0.9)", // Orangish
-        "rgba(230, 210, 250, 0.9)", // Purplish
-        "rgba(255, 250, 180, 0.9)"  // Yellowish
+        "rgba(255, 179, 186, 0.95)", // Pinkish
+        "rgba(186, 255, 201, 0.95)", // Greenish
+        "rgba(186, 225, 255, 0.95)", // Blueish
+        "rgba(255, 223, 186, 0.95)", // Orangish
+        "rgba(230, 190, 255, 0.95)", // Purplish
+        "rgba(255, 242, 138, 0.95)"  // Yellowish
     ];
     note.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
     note.style.backdropFilter = "blur(4px) saturate(100%)";
     note.style.WebkitBackdropFilter = "blur(4px) saturate(100%)";
     note.style.color = "#111111";
-    note.style.border = "1px solid rgba(0, 0, 0, 0.1)";
+    note.style.border = "1px solid rgba(0, 0, 0, 0.15)";
     note.style.padding = "20px 15px";
     note.style.paddingTop = "24px";
     note.style.minWidth = "150px";
@@ -241,7 +241,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.lineHeight = "1.5";
     note.style.wordWrap = "break-word";
     note.style.overflowWrap = "break-word";
-    note.style.boxShadow = "3px 6px 14px rgba(0,0,0,0.25), 0 2px 5px rgba(0,0,0,0.2)";
+    note.style.boxShadow = "4px 8px 16px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.3)";
     note.style.borderRadius = "6px";
     note.style.transform = `rotate(${Math.random() * 4 - 2}deg)`;
     note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
