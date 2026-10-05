@@ -109,7 +109,7 @@ function restoreNotes() {
             note.style.left = noteData.x;
             note.style.top = noteData.y;
 
-            note.style.backgroundColor = noteData.bgColor || "rgba(255, 242, 138, 0.95)";
+            note.style.backgroundColor = "rgba(220, 220, 220, 0.85)";
             note.style.backdropFilter = "blur(4px) saturate(100%)";
             note.style.WebkitBackdropFilter = "blur(4px) saturate(100%)";
             note.style.color = "#111111";
@@ -194,7 +194,6 @@ function saveNote(note) {
         y: note.style.top,
         url: url,
         rotation: note.style.transform,
-        bgColor: note.style.backgroundColor,
         width: note.style.width,
         height: note.style.height
     }
@@ -218,15 +217,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.left = `${lastRightX}px`;
     note.style.top = `${lastRightY}px`;
 
-    const colors = [
-        "rgba(255, 179, 186, 0.95)", // Pinkish
-        "rgba(186, 255, 201, 0.95)", // Greenish
-        "rgba(186, 225, 255, 0.95)", // Blueish
-        "rgba(255, 223, 186, 0.95)", // Orangish
-        "rgba(230, 190, 255, 0.95)", // Purplish
-        "rgba(255, 242, 138, 0.95)"  // Yellowish
-    ];
-    note.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    note.style.backgroundColor = "rgba(220, 220, 220, 0.85)";
     note.style.backdropFilter = "blur(4px) saturate(100%)";
     note.style.WebkitBackdropFilter = "blur(4px) saturate(100%)";
     note.style.color = "#111111";
