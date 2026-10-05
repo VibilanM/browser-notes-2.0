@@ -109,16 +109,17 @@ function restoreNotes() {
             note.style.left = noteData.x;
             note.style.top = noteData.y;
 
-            note.style.backgroundColor = "rgba(242, 242, 242, 0.85)";
-            note.style.backdropFilter = "blur(8px) saturate(120%)";
-            note.style.WebkitBackdropFilter = "blur(8px) saturate(120%)";
+            note.style.backgroundColor = noteData.bgColor || "rgba(242, 242, 242, 0.85)";
+            note.style.backdropFilter = "blur(4px) saturate(100%)";
+            note.style.WebkitBackdropFilter = "blur(4px) saturate(100%)";
             note.style.color = "#111111";
             note.style.border = "1px solid rgba(0, 0, 0, 0.1)";
             note.style.padding = "20px 15px";
             note.style.paddingTop = "24px";
             note.style.minWidth = "150px";
-            note.style.maxWidth = "300px";
             note.style.minHeight = "100px";
+            if (noteData.width) note.style.width = noteData.width;
+            if (noteData.height) note.style.height = noteData.height;
             note.style.zIndex = "9999";
             note.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
             note.style.fontSize = "15px";
@@ -126,13 +127,16 @@ function restoreNotes() {
             note.style.wordWrap = "break-word";
             note.style.overflowWrap = "break-word";
             note.style.boxShadow = "2px 4px 12px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.15)";
-            note.style.borderRadius = "2px";
+            note.style.borderRadius = "6px";
             note.style.transform = noteData.rotation || `rotate(${Math.random() * 4 - 2}deg)`;
             note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
             note.style.cursor = "text";
             note.style.whiteSpace = "pre-wrap";
+            note.style.resize = "both";
+            note.style.overflow = "auto";
 
             note.addEventListener("input", () => saveNote(note));
+            note.addEventListener("mouseup", () => saveNote(note));
 
             const dragHandle = createDragHandle(note);
             note.appendChild(dragHandle);
@@ -189,7 +193,10 @@ function saveNote(note) {
         x: note.style.left,
         y: note.style.top,
         url: url,
-        rotation: note.style.transform
+        rotation: note.style.transform,
+        bgColor: note.style.backgroundColor,
+        width: note.style.width,
+        height: note.style.height
     }
 
     chrome.storage.local.set({ [id]: noteData });
@@ -211,15 +218,22 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.left = `${lastRightX}px`;
     note.style.top = `${lastRightY}px`;
 
-    note.style.backgroundColor = "rgba(242, 242, 242, 0.85)";
-    note.style.backdropFilter = "blur(8px) saturate(120%)";
-    note.style.WebkitBackdropFilter = "blur(8px) saturate(120%)";
+    const colors = [
+        "rgba(255, 235, 238, 0.85)", // Pinkish
+        "rgba(232, 245, 233, 0.85)", // Greenish
+        "rgba(227, 242, 253, 0.85)", // Blueish
+        "rgba(255, 243, 224, 0.85)", // Orangish
+        "rgba(243, 229, 245, 0.85)", // Purplish
+        "rgba(255, 253, 231, 0.85)"  // Yellowish
+    ];
+    note.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    note.style.backdropFilter = "blur(4px) saturate(100%)";
+    note.style.WebkitBackdropFilter = "blur(4px) saturate(100%)";
     note.style.color = "#111111";
     note.style.border = "1px solid rgba(0, 0, 0, 0.1)";
     note.style.padding = "20px 15px";
     note.style.paddingTop = "24px";
     note.style.minWidth = "150px";
-    note.style.maxWidth = "300px";
     note.style.minHeight = "100px";
     note.style.zIndex = "9999";
     note.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
@@ -228,13 +242,16 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.wordWrap = "break-word";
     note.style.overflowWrap = "break-word";
     note.style.boxShadow = "2px 4px 12px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.15)";
-    note.style.borderRadius = "2px";
+    note.style.borderRadius = "6px";
     note.style.transform = `rotate(${Math.random() * 4 - 2}deg)`;
     note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
     note.style.cursor = "text";
     note.style.whiteSpace = "pre-wrap";
+    note.style.resize = "both";
+    note.style.overflow = "auto";
 
     note.addEventListener("input", () => saveNote(note));
+    note.addEventListener("mouseup", () => saveNote(note));
 
     const dragHandle = createDragHandle(note);
     note.appendChild(dragHandle);
