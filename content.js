@@ -2,7 +2,7 @@ function createDragHandle(note) {
     const handle = document.createElement("div");
 
     handle.style.position = "absolute";
-    handle.style.top = "6px";
+    handle.style.top = "12px";
     handle.style.left = "50%";
     handle.style.transform = "translateX(-50%)";
     handle.style.width = "12px";
@@ -56,8 +56,8 @@ function createDeleteButton(note) {
     btn.src = chrome.runtime.getURL("assets/delete.png");
 
     btn.style.position = "absolute";
-    btn.style.top = "6px";
-    btn.style.right = "6px";
+    btn.style.top = "12px";
+    btn.style.right = "12px";
     btn.style.width = "14px";
     btn.style.height = "14px";
     btn.style.cursor = "pointer";
@@ -121,17 +121,15 @@ function restoreNotes() {
             note.style.left = noteData.x;
             note.style.top = noteData.y;
 
-            note.style.backgroundColor = "rgba(28, 28, 28, 0.78)";
-            note.style.backdropFilter = "blur(20px) saturate(160%)";
-            note.style.WebkitBackdropFilter = "blur(20px) saturate(160%)";
+            note.style.backgroundColor = "rgba(50, 50, 50, 0.65)";
+            note.style.backdropFilter = "blur(12px) saturate(150%)";
+            note.style.WebkitBackdropFilter = "blur(12px) saturate(150%)";
             note.style.color = "rgba(255, 255, 255, 0.88)";
             note.style.border = "none";
-            note.style.padding = "20px 16px";
-            note.style.paddingTop = "28px";
-            note.style.minWidth = "160px";
-            note.style.minHeight = "100px";
-            if (noteData.width) note.style.width = noteData.width;
-            if (noteData.height) note.style.height = noteData.height;
+            note.style.padding = "16px";
+            note.style.paddingTop = "44px";
+            note.style.width = noteData.width || "200px";
+            note.style.height = noteData.height || "200px";
             note.style.zIndex = "9999";
             note.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
             note.style.fontSize = "15px";
@@ -140,8 +138,7 @@ function restoreNotes() {
             note.style.overflowWrap = "break-word";
             note.style.boxShadow = "0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12)";
             note.style.borderRadius = "28px";
-            note.style.transform = noteData.rotation || `rotate(${Math.random() * 4 - 2}deg)`;
-            note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
+            note.style.transition = "box-shadow 0.2s ease";
             note.style.cursor = "text";
             note.style.whiteSpace = "pre-wrap";
             note.style.resize = "both";
@@ -207,7 +204,6 @@ function saveNote(note) {
         x: note.style.left,
         y: note.style.top,
         url: url,
-        rotation: note.style.transform,
         width: note.style.width,
         height: note.style.height
     }
@@ -231,15 +227,15 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.left = `${lastRightX}px`;
     note.style.top = `${lastRightY}px`;
 
-    note.style.backgroundColor = "rgba(28, 28, 28, 0.78)";
-    note.style.backdropFilter = "blur(20px) saturate(160%)";
-    note.style.WebkitBackdropFilter = "blur(20px) saturate(160%)";
+    note.style.backgroundColor = "rgba(50, 50, 50, 0.65)";
+    note.style.backdropFilter = "blur(12px) saturate(150%)";
+    note.style.WebkitBackdropFilter = "blur(12px) saturate(150%)";
     note.style.color = "rgba(255, 255, 255, 0.88)";
     note.style.border = "none";
-    note.style.padding = "20px 16px";
-    note.style.paddingTop = "28px";
-    note.style.minWidth = "160px";
-    note.style.minHeight = "100px";
+    note.style.padding = "16px";
+    note.style.paddingTop = "44px";
+    note.style.width = "200px";
+    note.style.height = "200px";
     note.style.zIndex = "9999";
     note.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
     note.style.fontSize = "15px";
@@ -248,8 +244,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.overflowWrap = "break-word";
     note.style.boxShadow = "0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12)";
     note.style.borderRadius = "28px";
-    note.style.transform = `rotate(${Math.random() * 4 - 2}deg)`;
-    note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
+    note.style.transition = "box-shadow 0.2s ease";
     note.style.cursor = "text";
     note.style.whiteSpace = "pre-wrap";
     note.style.resize = "both";
