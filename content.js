@@ -109,7 +109,7 @@ function restoreNotes() {
             note.style.left = noteData.x;
             note.style.top = noteData.y;
 
-            note.style.backgroundColor = noteData.bgColor || "rgba(242, 242, 242, 0.85)";
+            note.style.backgroundColor = noteData.bgColor || "rgba(255, 240, 180, 0.9)";
             note.style.backdropFilter = "blur(4px) saturate(100%)";
             note.style.WebkitBackdropFilter = "blur(4px) saturate(100%)";
             note.style.color = "#111111";
@@ -126,7 +126,7 @@ function restoreNotes() {
             note.style.lineHeight = "1.5";
             note.style.wordWrap = "break-word";
             note.style.overflowWrap = "break-word";
-            note.style.boxShadow = "2px 4px 12px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.15)";
+            note.style.boxShadow = "3px 6px 14px rgba(0,0,0,0.25), 0 2px 5px rgba(0,0,0,0.2)";
             note.style.borderRadius = "6px";
             note.style.transform = noteData.rotation || `rotate(${Math.random() * 4 - 2}deg)`;
             note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
@@ -219,12 +219,12 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.top = `${lastRightY}px`;
 
     const colors = [
-        "rgba(255, 235, 238, 0.85)", // Pinkish
-        "rgba(232, 245, 233, 0.85)", // Greenish
-        "rgba(227, 242, 253, 0.85)", // Blueish
-        "rgba(255, 243, 224, 0.85)", // Orangish
-        "rgba(243, 229, 245, 0.85)", // Purplish
-        "rgba(255, 253, 231, 0.85)"  // Yellowish
+        "rgba(255, 210, 215, 0.9)", // Pinkish
+        "rgba(200, 235, 200, 0.9)", // Greenish
+        "rgba(200, 225, 255, 0.9)", // Blueish
+        "rgba(255, 225, 180, 0.9)", // Orangish
+        "rgba(230, 210, 250, 0.9)", // Purplish
+        "rgba(255, 250, 180, 0.9)"  // Yellowish
     ];
     note.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
     note.style.backdropFilter = "blur(4px) saturate(100%)";
@@ -241,7 +241,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.lineHeight = "1.5";
     note.style.wordWrap = "break-word";
     note.style.overflowWrap = "break-word";
-    note.style.boxShadow = "2px 4px 12px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.15)";
+    note.style.boxShadow = "3px 6px 14px rgba(0,0,0,0.25), 0 2px 5px rgba(0,0,0,0.2)";
     note.style.borderRadius = "6px";
     note.style.transform = `rotate(${Math.random() * 4 - 2}deg)`;
     note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
