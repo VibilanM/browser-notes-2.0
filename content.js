@@ -127,6 +127,8 @@ function restoreNotes() {
             note.style.overflowWrap = "break-word";
             note.style.boxShadow = "0 10px 40px -10px rgba(0,0,0,0.5), 0 0 10px rgba(0,0,0,0.1)";
             note.style.borderRadius = "12px";
+            note.style.transform = noteData.rotation || `rotate(${Math.random() * 4 - 2}deg)`;
+            note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
             note.style.cursor = "text";
             note.style.whiteSpace = "pre-wrap";
 
@@ -186,7 +188,8 @@ function saveNote(note) {
         content: note.innerText,
         x: note.style.left,
         y: note.style.top,
-        url: url
+        url: url,
+        rotation: note.style.transform
     }
 
     chrome.storage.local.set({ [id]: noteData });
@@ -226,6 +229,8 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     note.style.overflowWrap = "break-word";
     note.style.boxShadow = "0 10px 40px -10px rgba(0,0,0,0.5), 0 0 10px rgba(0,0,0,0.1)";
     note.style.borderRadius = "12px";
+    note.style.transform = `rotate(${Math.random() * 4 - 2}deg)`;
+    note.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
     note.style.cursor = "text";
     note.style.whiteSpace = "pre-wrap";
 
