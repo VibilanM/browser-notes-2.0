@@ -89,7 +89,7 @@ function createDeleteButton(note) {
 }
 
 function getNormalizedURL() {
-    return window.location.origin + window.location.pathname;
+    return window.location.origin + window.location.pathname + window.location.search;
 }
 
 function guardNoteControls(note, dragHandle, deleteBtn) {
@@ -187,6 +187,9 @@ function restoreNotes() {
 
             note.addEventListener("input", () => saveNote(note));
             note.addEventListener("mouseup", () => saveNote(note));
+            note.addEventListener("keydown", (e) => e.stopPropagation());
+            note.addEventListener("keyup", (e) => e.stopPropagation());
+            note.addEventListener("keypress", (e) => e.stopPropagation());
 
             const dragHandle = createDragHandle(note);
             note.appendChild(dragHandle);
@@ -289,6 +292,9 @@ chrome.runtime.onMessage.addListener((message, sender) => {
 
     note.addEventListener("input", () => saveNote(note));
     note.addEventListener("mouseup", () => saveNote(note));
+    note.addEventListener("keydown", (e) => e.stopPropagation());
+    note.addEventListener("keyup", (e) => e.stopPropagation());
+    note.addEventListener("keypress", (e) => e.stopPropagation());
 
     const dragHandle = createDragHandle(note);
     note.appendChild(dragHandle);
