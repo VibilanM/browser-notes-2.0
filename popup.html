@@ -1,22 +1,120 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>All Notes</title>
     <style>
         body {
-            font-family: sans-serif;
-            width: 200px;
-            padding: 10px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            width: 320px;
+            max-height: 500px;
+            margin: 0;
+            padding: 16px;
+            background: #1a1a1c;
+            color: rgba(255, 255, 255, 0.88);
+            overflow-y: auto;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        #notes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .note-item {
+            background: rgba(38, 38, 42, 0.55);
+            backdrop-filter: blur(40px) saturate(200%) brightness(1.1);
+            -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1);
+            border-radius: 16px;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1.5px 0 rgba(255, 255, 255, 0.28),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+                inset 1px 0 0 rgba(255, 255, 255, 0.1),
+                inset -1px 0 0 rgba(0, 0, 0, 0.12);
+            padding: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .note-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(
+                150deg,
+                rgba(255, 255, 255, 0.13) 0%,
+                rgba(255, 255, 255, 0.05) 30%,
+                rgba(255, 255, 255, 0.01) 55%,
+                rgba(0, 0, 0, 0.04) 100%
+            );
+            pointer-events: none;
+        }
+
+        .note-item:hover {
+            box-shadow: 
+                0 12px 32px rgba(0, 0, 0, 0.5),
+                inset 0 1.5px 0 rgba(255, 255, 255, 0.32),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+                inset 1px 0 0 rgba(255, 255, 255, 0.12),
+                inset -1px 0 0 rgba(0, 0, 0, 0.14);
+            transform: translateY(-1px);
+        }
+
+        .note-content {
+            font-size: 13px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .note-url {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-top: 40px;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
-
 <body>
-    <h3>Hello Extension 👋</h3>
-    <button id="btn">Click me</button>
+    <h2>All Notes</h2>
+    <div id="notes-container"></div>
 
     <script src="popup.js"></script>
 </body>
-
 </html>
